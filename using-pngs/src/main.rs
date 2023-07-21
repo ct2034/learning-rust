@@ -35,4 +35,45 @@ fn main() {
     // Write contrast image
     contrast_image.save("contrast.png").unwrap();
 
+    // Increase contrast differently
+    let mut contrast2_image: ImageBuffer<Rgb<u8>, Vec<u8>> = ImageBuffer::new(width, height);
+    for x in 0..width {
+        for y in 0..height {
+            let pixel = source_image.get_pixel(x, y);
+            let mut pixel_out = [0, 0, 0];
+            for i in 0..3 {
+                let mut val = pixel[i] as f32 / 255.0;
+                val = val.powf(8.0);
+                pixel_out[i] = (val * 255.0) as u8;
+            }
+            contrast2_image.put_pixel(x, y, Rgb(pixel_out));
+        }
+    }
+
+    // Write contrast image
+    contrast2_image.save("contrast2.png").unwrap();
+
+    // Invert colors
+    let mut inverted_image: ImageBuffer<Rgb<u8>, Vec<u8>> = ImageBuffer::new(width, height);
+    for x in 0..width {
+        for y in 0..height {
+            let pixel = source_image.get_pixel(x, y);
+            let mut pixel_out = [0, 0, 0];
+            for i in 0..3 {
+                pixel_out[i] = ((
+                    pixel[(1 + i) % 3] as f32 +
+                    pixel[(2 + i) % 3] as f32
+                ) / 2.0) as u8;
+                if pixel_out[i] > 255 {
+                    pixel_out[i] = 255;
+                }
+            }
+            inverted_image.put_pixel(x, y, Rgb(pixel_out));
+        }
+    }
+
+    // Write contrast image
+    inverted_image.save("inverted.png").unwrap();
+
+
 }
