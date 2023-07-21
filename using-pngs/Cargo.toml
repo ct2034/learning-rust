@@ -7,4 +7,4 @@ edition = "2021"
 
 [dependencies]
 png = "0.17.7"
-convolve2d = "0.1.0"
+image = "0.24.6"
