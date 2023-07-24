@@ -4,6 +4,7 @@ use rand_chacha; // 0.3.0
 
 const MAX_VAR_SIZE: u64 = 1000;
 const SQUARE_WIDTH: usize = 3;
+const CORNER_CHAR: &str = " ";
 
 fn get_n_random_ints(n: usize, rng: &mut rand_chacha::ChaCha8Rng) -> Vec<u64> {
     let mut v: Vec<u64> = Vec::new();
@@ -27,9 +28,9 @@ fn plot_magic_square(v: Vec<u64>) {
     assert_eq!(v.len(), 9);
     let space_len = (MAX_VAR_SIZE - 1).to_string().len() + 4;
     let horiz_line = (
-        "+".to_string() + 
+        CORNER_CHAR.to_string() + 
         &"-".repeat(space_len)
-    ).repeat(SQUARE_WIDTH) + "+";
+    ).repeat(SQUARE_WIDTH) + CORNER_CHAR;
     println!("{}", horiz_line);
     let mut i_v: usize = 0;
     for i_line in 0..SQUARE_WIDTH {
