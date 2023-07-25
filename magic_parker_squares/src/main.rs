@@ -1,6 +1,7 @@
 use rand_chacha::rand_core::SeedableRng;
 use rand_chacha::rand_core::RngCore;
 use rand_chacha; // 0.3.0
+use std::collections::HashSet;
 
 const MAX_VAR_SIZE: u64 = 1000;
 const SQUARE_WIDTH: usize = 3;
@@ -22,6 +23,14 @@ fn get_squared_sum(v: Vec<u64>) -> u64 {
         sum += (x).pow(2);
     }
     return sum;
+}
+
+fn unique(v: &Vec<u64>) -> bool {
+    let mut seen = HashSet::new();
+    for x in v {
+        seen.insert(x);
+    }
+    return seen.len() == v.len();
 }
 
 fn plot_magic_square(v: Vec<u64>) {
@@ -70,6 +79,7 @@ fn main() {
             if first_partial_sum == other_partial_sum {
                 println!("success try {}", i_try);
                 println!("partial_sum {}", first_partial_sum);
+                println!("unique {}", unique(&outside));
                 let magic_square: Vec<u64> = vec![
                     // first row
                     outside[0],
